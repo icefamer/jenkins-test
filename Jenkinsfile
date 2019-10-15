@@ -11,14 +11,9 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('test') {
+        stage('部署') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'java -jar service/cms-manage/target/cms-manage.jar'
             }
         }
     }
