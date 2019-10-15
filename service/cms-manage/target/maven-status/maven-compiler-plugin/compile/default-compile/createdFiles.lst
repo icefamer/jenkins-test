@@ -1,5 +1,0 @@
-com\icefamer\server\service\cms_manage\CmsManageApplication.class
-com\icefamer\server\service\cms_manage\dao\CmsManageRepository.class
-com\icefamer\server\service\cms_manage\web\controller\CmsPageController.class
-com\icefamer\server\service\cms_manage\service\CmsPageService.class
-com\icefamer\server\service\cms_manage\service\Impl\CmsPageServiceImpl.class
