@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'mvn -B -DskipTests clean package -f service/cms_manage/pom.xml'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
     }
