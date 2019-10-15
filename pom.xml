@@ -9,16 +9,16 @@
         <version>2.0.1.RELEASE</version>
     </parent>
     <groupId>com.icefamer</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>server</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>../utils</module>
-        <module>../common</module>
-        <module>../model</module>
-        <module>../api</module>
-        <module>../service</module>
+        <module>utils</module>
+        <module>common</module>
+        <module>model</module>
+        <module>api</module>
+        <module>service</module>
     </modules>
 
     <properties>
