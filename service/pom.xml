@@ -53,14 +53,6 @@
                 <version>2.22.2</version>
                 <configuration>
                     <showSuccess>false</showSuccess>
-                    <!--表示执行任何子目录下所有命名以Test结尾的java类-->
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <!--表示不执行任何子目录下所有命名以Test开头的java类-->
-                    <excludes>
-                        <exclude>**/Test*.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
