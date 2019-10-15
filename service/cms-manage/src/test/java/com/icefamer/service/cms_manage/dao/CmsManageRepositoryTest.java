@@ -1,6 +1,7 @@
 package com.icefamer.service.cms_manage.dao;
 
 
+import com.icefamer.server.service.cms_manage.dao.CmsManageRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

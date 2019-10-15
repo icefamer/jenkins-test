@@ -1,4 +1,4 @@
-package com.icefamer.service.cms_manage.dao;
+package com.icefamer.server.service.cms_manage.dao;
 
 import com.icefamer.server.domain.cms.CmsPage;
 import org.springframework.data.domain.Page;

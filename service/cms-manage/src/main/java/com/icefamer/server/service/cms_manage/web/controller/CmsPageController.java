@@ -1,9 +1,9 @@
-package com.icefamer.service.cms_manage.web.controller;
+package com.icefamer.server.service.cms_manage.web.controller;
 
 import com.icefamer.server.api.cms.CmsPageControllerApi;
 import com.icefamer.server.domain.cms.request.QueryPageRequest;
 import com.icefamer.server.model.response.QueryResponseResult;
-import com.icefamer.service.cms_manage.service.CmsPageService;
+import com.icefamer.server.service.cms_manage.service.CmsPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

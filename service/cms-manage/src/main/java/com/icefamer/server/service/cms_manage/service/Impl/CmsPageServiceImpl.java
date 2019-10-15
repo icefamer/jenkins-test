@@ -1,12 +1,12 @@
-package com.icefamer.service.cms_manage.service.Impl;
+package com.icefamer.server.service.cms_manage.service.Impl;
 
 import com.icefamer.server.domain.cms.CmsPage;
 import com.icefamer.server.domain.cms.request.QueryPageRequest;
 import com.icefamer.server.model.response.CommonCode;
 import com.icefamer.server.model.response.QueryResponseResult;
 import com.icefamer.server.model.response.QueryResult;
-import com.icefamer.service.cms_manage.dao.CmsManageRepository;
-import com.icefamer.service.cms_manage.service.CmsPageService;
+import com.icefamer.server.service.cms_manage.dao.CmsManageRepository;
+import com.icefamer.server.service.cms_manage.service.CmsPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
