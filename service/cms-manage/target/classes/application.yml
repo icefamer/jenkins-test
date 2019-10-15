@@ -1,0 +1,12 @@
+server:
+  port: 31001
+spring:
+  application:
+    name: cms-manage
+  data:
+    mongodb:
+#      database: education-cms
+#      authentication-database: admin
+#      username: cms
+#      password: 900922
+      uri: mongodb://cms:900922@192.168.47.128:27017/education-cms
