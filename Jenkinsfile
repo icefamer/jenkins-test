@@ -1,5 +1,8 @@
 pipeline {
-    stages {
+    agent {
+           label{"this jenkins demo"}
+       }
+       stages {
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package'
