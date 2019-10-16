@@ -55,7 +55,8 @@ pipeline {
     stages {
         stage('清理本地仓库') {
             steps{
-                sh "sudo /root/sh/del_lastUpdated.sh"
+                echo "clear del ..."
+//                sh "/root/sh/del_lastUpdated.sh"
             }
         }
         stage('Checkout') {
