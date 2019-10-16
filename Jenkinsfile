@@ -85,6 +85,12 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore clean install"
             }
         }
+        stage('测试') {
+            steps{
+                // maven test
+                sh "mvn test"
+            }
+        }
 //        stage('静态检查') {
 //            steps {
 //                echo "starting codeAnalyze with SonarQube......"
