@@ -38,12 +38,12 @@ pipeline {
 //        pollSCM('H/5 * * * 1-5')
 //    }
     //pipeline运行结果通知给触发者
-    post{
-        //执行后清理workspace
-        always{
-            echo "clear workspace......"
-            deleteDir()
-        }
+//    post{
+//        //执行后清理workspace
+//        always{
+//            echo "clear workspace......"
+//            deleteDir()
+//        }
 //        failure{
 //            script {
 //                emailext body: '${JELLY_SCRIPT,template="static-analysis"}',
@@ -51,7 +51,7 @@ pipeline {
 //                subject: '${JOB_NAME}- Build # ${BUILD_NUMBER} - Failure!'
 //            }
 //        }
-    }
+//    }
 
     stages {
         stage('清理本地仓库') {
@@ -90,6 +90,12 @@ pipeline {
             steps{
                 // maven test
                 sh "mvn test"
+            }
+        }
+        stage('运行') {
+            steps{
+                // maven test
+                sh "java -jar service/cms-manage/target/cms-manage.jar"
             }
         }
 //        stage('静态检查') {
