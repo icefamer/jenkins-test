@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-           label{"this jenkins demo"}
-       }
+    agent { label 'my-defined-label' }
        stages {
         stage('Build') { 
             steps {
