@@ -2,21 +2,22 @@
 
 pipeline {
     //确认使用主机/节点机
-    agent any /*{
+    agent any
+    /*{
         node { label ' master'}
     }*/
     //  声明参数
-    parameters{
-//        GIT代码路径
-        string(name:'repoUrl', defaultValue: 'https://github.com/icefamer/jenkins-test.git', description: ' GIT代码路径')
-//         部署内容的相对路径
-        string(name:'deployLocation', defaultValue: 'target/*.jar,target/alternateLocation/*.*,'+'target/classes/*.*,target/classes/i18n/*.*,target/classes/rawSQL/*.*,'+'target/classes/rawSQL/mapper/*.*,target/classes/rawSQL/mysql/*.*,'+'target/classes/rawSQL/sqlserver/*.*', description: '部署内容的相对路径 ')
-//        服务器参数采用了组合方式，避免多次选择
-        string(name:'dev_server', defaultValue: 'IP,Port,Name,Passwd', description: '开发服务器(IP,Port,Name,Passwd)')
-        string(name:'ZHtest_server', defaultValue: 'IP,Port,Name,Passwd', description: '中文测试服务器(IP,Port,Name,Passwd)')
-        string(name:'alT19_server', defaultValue: 'IP,Port,Name,Passwd', description: ' 生产服务器T1(IP,Port,Name,Passwd)')
-        string(name:'alT20_server', defaultValue: 'IP,Port,Name,Passwd', description: ' 生产服务器T2(IP,Port,Name,Passwd)')
-    }
+//    parameters{
+////        GIT代码路径
+//        string(name:'repoUrl', defaultValue: 'https://github.com/icefamer/jenkins-test.git', description: ' GIT代码路径')
+////         部署内容的相对路径
+//        string(name:'deployLocation', defaultValue: 'target/*.jar,target/alternateLocation/*.*,'+'target/classes/*.*,target/classes/i18n/*.*,target/classes/rawSQL/*.*,'+'target/classes/rawSQL/mapper/*.*,target/classes/rawSQL/mysql/*.*,'+'target/classes/rawSQL/sqlserver/*.*', description: '部署内容的相对路径 ')
+////        服务器参数采用了组合方式，避免多次选择
+//        string(name:'dev_server', defaultValue: 'IP,Port,Name,Passwd', description: '开发服务器(IP,Port,Name,Passwd)')
+//        string(name:'ZHtest_server', defaultValue: 'IP,Port,Name,Passwd', description: '中文测试服务器(IP,Port,Name,Passwd)')
+//        string(name:'alT19_server', defaultValue: 'IP,Port,Name,Passwd', description: ' 生产服务器T1(IP,Port,Name,Passwd)')
+//        string(name:'alT20_server', defaultValue: 'IP,Port,Name,Passwd', description: ' 生产服务器T2(IP,Port,Name,Passwd)')
+//    }
     // 声明使用的工具
     tools {
         maven 'maven'
