@@ -21,11 +21,11 @@ public class CmsPage {
     /**
      * 页面名称、别名、访问地址、类型（静态/动态）、页面模版、状态
      */
-    //站点ID
-    private String siteId;
     //页面ID
     @Id
     private String pageId;
+    //站点ID
+    private String siteId;
     //页面名称
     private String pageName;
     //别名

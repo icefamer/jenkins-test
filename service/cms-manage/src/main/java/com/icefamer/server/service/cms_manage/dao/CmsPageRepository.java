@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CmsManageRepository extends MongoRepository<CmsPage, String> {
+public interface CmsPageRepository extends MongoRepository<CmsPage, String> {
     CmsPage findByPageName(String pageName);
     CmsPage findByPageNameAndPageType(String pageName, String pageType);
     CmsPage findBySiteIdAndPageType(String siteId, String PageType);

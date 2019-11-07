@@ -7,21 +7,22 @@ pipeline {
         node { label ' master'}
     }*/
     //  声明参数
-//    parameters{
-////        GIT代码路径
-//        string(name:'repoUrl', defaultValue: 'https://github.com/icefamer/jenkins-test.git', description: ' GIT代码路径')
-////         部署内容的相对路径
-//        string(name:'deployLocation', defaultValue: 'target/*.jar,target/alternateLocation/*.*,'+'target/classes/*.*,target/classes/i18n/*.*,target/classes/rawSQL/*.*,'+'target/classes/rawSQL/mapper/*.*,target/classes/rawSQL/mysql/*.*,'+'target/classes/rawSQL/sqlserver/*.*', description: '部署内容的相对路径 ')
-////        服务器参数采用了组合方式，避免多次选择
-//        string(name:'dev_server', defaultValue: 'IP,Port,Name,Passwd', description: '开发服务器(IP,Port,Name,Passwd)')
+    parameters{
+//        GIT代码路径
+        string(name:'repoUrl', defaultValue: 'https://github.com/icefamer/jenkins-test.git', description: ' GIT代码路径')
+//         部署内容的相对路径
+        string(name:'deployLocation', defaultValue: 'target/*.jar,target/alternateLocation/*.*,'+'target/classes/*.*,target/classes/i18n/*.*,target/classes/rawSQL/*.*,'+'target/classes/rawSQL/mapper/*.*,target/classes/rawSQL/mysql/*.*,'+'target/classes/rawSQL/sqlserver/*.*', description: '部署内容的相对路径 ')
+//        服务器参数采用了组合方式，避免多次选择
+        string(name:'docker_server', defaultValue: 'IP,Port,Name,Passwd', description: 'docker服务器(IP,Port,Name,Passwd)')
 //        string(name:'ZHtest_server', defaultValue: 'IP,Port,Name,Passwd', description: '中文测试服务器(IP,Port,Name,Passwd)')
 //        string(name:'alT19_server', defaultValue: 'IP,Port,Name,Passwd', description: ' 生产服务器T1(IP,Port,Name,Passwd)')
 //        string(name:'alT20_server', defaultValue: 'IP,Port,Name,Passwd', description: ' 生产服务器T2(IP,Port,Name,Passwd)')
-//    }
+    }
     // 声明使用的工具
     tools {
-        maven 'maven'
-        jdk   'java8'
+        maven  'maven'
+        jdk    'java8'
+        docker 'docker'
     }
     //常量参数，初始确定后一般不需更改
 //    environment{
@@ -38,20 +39,20 @@ pipeline {
 //        pollSCM('H/5 * * * 1-5')
 //    }
     //pipeline运行结果通知给触发者
-//    post{
-//        //执行后清理workspace
-//        always{
-//            echo "clear workspace......"
-//            deleteDir()
-//        }
-//        failure{
-//            script {
-//                emailext body: '${JELLY_SCRIPT,template="static-analysis"}',
-//                recipientProviders: [[$class: 'RequesterRecipientProvider'],[$class: 'DevelopersRecipientProvider']],
-//                subject: '${JOB_NAME}- Build # ${BUILD_NUMBER} - Failure!'
-//            }
-//        }
-//    }
+    post{
+        //执行后清理workspace
+        always{
+            echo "clear workspace......"
+            deleteDir()
+        }
+        failure{
+            script {
+                emailext body: '${JELLY_SCRIPT,template="static-analysis"}',
+                recipientProviders: [[$class: 'RequesterRecipientProvider'],[$class: 'DevelopersRecipientProvider']],
+                subject: '${JOB_NAME}- Build # ${BUILD_NUMBER} - Failure!'
+            }
+        }
+    }
 
     stages {
         stage('清理本地仓库') {
@@ -74,9 +75,7 @@ pipeline {
                                                  url: 'https://github.com/icefamer/jenkins-test.git']
                                         ]
                 ])
-                gitversion = scmVars.GIT_REVISION
                 }
-                sh "echo ${gitversion}"
             }
         }
         // 编译构建代码
@@ -86,44 +85,38 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore clean install"
             }
         }
-        stage('测试') {
-            steps{
-                // maven test
-                sh "mvn test"
-            }
-        }
-        stage('运行') {
-            steps{
-                // maven test
-                sh "java -jar service/cms-manage/target/cms-manage.jar"
-            }
-        }
-//        stage('静态检查') {
-//            steps {
-//                echo "starting codeAnalyze with SonarQube......"
-//                //sonar:sonar.QualityGate should pass
-//                withSonarQubeEnv('Sonar-6.4') {
-//                  //固定使用项目根目录${basedir}下的pom.xml进行代码检查
-//                  //sh "mvn -f pom.xml clean compile sonar:sonar"
-//                  sh "mvn sonar:sonar "+
-//                  "-Dsonar.sourceEncoding=UTF-8 "//+
-//                  //"-Dsonar.language=java,groovy,xml"+
-//                  //"-Dsonar.projectVersion=${v} "+
-//                  //"-Dsonar.projectKey=${JOB_NAME} "+
-//                  //"-Dsonar.projectName=${JOB_NAME}"
-//                }
-//                script {
-//                //  未通过代码检查，中断
-//                timeout(10) {
-//                    //利用sonar webhook功能通知pipeline代码检测结果，未通过质量阈，pipeline将会fail
-//                    def qg = waitForQualityGate()
-//                        if (qg.status != 'OK') {
-//                            error "未通过Sonarqube的代码质量阈检查，请及时修改！failure: ${qg.status}"
-//                        }
-//                    }
-//                }
+//        stage('测试') {
+//            steps{
+//                // maven test
+//                sh "mvn test"
 //            }
 //        }
+        stage('静态检查') {
+            steps {
+                echo "starting codeAnalyze with SonarQube......"
+                //sonar:sonar.QualityGate should pass
+                withSonarQubeEnv('Sonar-7.9') {
+                  //固定使用项目根目录${basedir}下的pom.xml进行代码检查
+                  //sh "mvn -f pom.xml clean compile sonar:sonar"
+                  sh "mvn sonar:sonar "+
+                  "-Dsonar.sourceEncoding=UTF-8 "//+
+                  //"-Dsonar.language=java,groovy,xml"+
+                  //"-Dsonar.projectVersion=${v} "+
+                  //"-Dsonar.projectKey=${JOB_NAME} "+
+                  //"-Dsonar.projectName=${JOB_NAME}"
+                }
+                script {
+                //  未通过代码检查，中断
+                timeout(10) {
+                    //利用sonar webhook功能通知pipeline代码检测结果，未通过质量阈，pipeline将会fail
+                    def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "未通过Sonarqube的代码质量阈检查，请及时修改！failure: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
 //        stage('归档') {
 //            steps {
 //                // 归档文件
